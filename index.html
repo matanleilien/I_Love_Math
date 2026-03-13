@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ילדה בשוק</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <!-- ===== מסך כותרת ===== -->
+    <div id="screen-title" class="screen active">
+        <div class="gb-frame">
+
+            <div class="title-banner">
+                <div class="title-main" id="txt-title">ילדה בשוק</div>
+                <div class="title-sub" id="txt-subtitle">MARKET GIRL</div>
+            </div>
+
+            <div class="title-art">
+                <div class="art-row">🏪 🥤 📿 🪆</div>
+                <div class="art-row">🌟 🛒 💰 🌟</div>
+            </div>
+
+            <div class="menu-list">
+                <button class="pixel-btn" onclick="startGame()">
+                    <span class="btn-arrow">▶</span>
+                    <span id="txt-start">התחל משחק</span>
+                </button>
+                <button class="pixel-btn" onclick="openSettings()">
+                    <span class="btn-arrow">⚙</span>
+                    <span id="txt-settings-btn">הגדרות</span>
+                </button>
+            </div>
+
+            <div class="press-start blink" id="txt-press">לחץ כדי להתחיל</div>
+
+        </div>
+    </div>
+
+    <!-- ===== מסך הגדרות ===== -->
+    <div id="screen-settings" class="screen">
+        <div class="gb-frame">
+
+            <div class="window-header">
+                <span id="txt-settings-title">הגדרות</span>
+            </div>
+
+            <div class="settings-body">
+
+                <div class="setting-row">
+                    <span class="setting-key" id="txt-lang-label">שפה</span>
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" id="btn-lang-he" onclick="setLanguage('he')">עברית</button>
+                        <button class="toggle-btn" id="btn-lang-en" onclick="setLanguage('en')">EN</button>
+                    </div>
+                </div>
+
+                <div class="setting-row setting-info">
+                    <span id="txt-coins-label">מטבעות התחלתיים</span>
+                    <span class="setting-val">0 🪙</span>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-key" id="txt-goal-label">יעד לניצחון</span>
+                    <div class="toggle-group">
+                        <select id="select-goal" class="pixel-select" onchange="setGoal(this.value)">
+                            <option value="10">10 🪙</option>
+                            <option value="20">20 🪙</option>
+                            <option value="30">30 🪙</option>
+                            <option value="40">40 🪙</option>
+                            <option value="50">50 🪙</option>
+                            <option value="60">60 🪙</option>
+                            <option value="70">70 🪙</option>
+                            <option value="80">80 🪙</option>
+                            <option value="90">90 🪙</option>
+                            <option value="100" selected>100 🪙</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-key" id="txt-volume-label">מוסיקה</span>
+                    <div class="volume-control">
+                        <button class="mute-btn" id="btn-mute" onclick="toggleMute()">🔊</button>
+                        <input type="range" id="volume-slider" class="pixel-slider"
+                               min="0" max="1" step="0.05" value="0.3"
+                               oninput="setMusicVolume(this.value)">
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-key" id="txt-balloon-color">צבע בלונים</span>
+                    <div class="color-picker">
+                        <button class="color-btn active" data-color="#e74c3c" style="--c:#e74c3c" onclick="setBalloonColor('#e74c3c')"></button>
+                        <button class="color-btn" data-color="#3498db" style="--c:#3498db" onclick="setBalloonColor('#3498db')"></button>
+                        <button class="color-btn" data-color="#2ecc71" style="--c:#2ecc71" onclick="setBalloonColor('#2ecc71')"></button>
+                        <button class="color-btn" data-color="#f1c40f" style="--c:#f1c40f" onclick="setBalloonColor('#f1c40f')"></button>
+                        <button class="color-btn" data-color="#e91e9b" style="--c:#e91e9b" onclick="setBalloonColor('#e91e9b')"></button>
+                        <button class="color-btn" data-color="#9b59b6" style="--c:#9b59b6" onclick="setBalloonColor('#9b59b6')"></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="pixel-btn back-btn" onclick="closeSettings()">
+                <span class="btn-arrow">◀</span>
+                <span id="txt-back">חזור</span>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ===== מסך הליכה בשוק ===== -->
+    <div id="screen-walk" class="screen">
+        <div class="gb-frame">
+
+            <!-- HUD עליון -->
+            <div class="hud-bar">
+                <span class="hud-item">🪙 <span id="walk-coins">0</span></span>
+                <span class="hud-item hud-title-text">ילדה בשוק</span>
+                <span class="hud-item" id="walk-vendor-label">מוכר 1</span>
+            </div>
+
+            <!-- סצנת הרחוב -->
+            <div class="street-scene">
+
+                <!-- שלט שוק בראש -->
+                <div class="market-banner">🏮 <span id="walk-banner-text">שוק הכפר</span> 🏮</div>
+
+                <!-- מסלול - pixel art canvas -->
+                <canvas id="walk-canvas" width="240" height="90"></canvas>
+
+            </div>
+
+            <!-- תיבת הודעה -->
+            <div class="message-box">
+                <div class="message-portrait" id="msg-portrait">🧒‍♀️</div>
+                <div class="message-text" id="walk-message">הילדה יוצאת לשוק...</div>
+            </div>
+
+            <!-- כפתורי פעולה -->
+            <div class="walk-actions" id="walk-actions">
+                <button class="pixel-btn" id="btn-talk" onclick="openTrade()" style="display:none">
+                    <span class="btn-arrow">💬</span>
+                    <span id="txt-talk">דבר עם המוכר</span>
+                </button>
+                <button class="pixel-btn" id="btn-next" onclick="walkToNextVendor()" style="display:none">
+                    <span class="btn-arrow">▶</span>
+                    <span id="txt-next">עבור לדוכן הבא</span>
+                </button>
+                <button class="pixel-btn settings-inline-btn" id="btn-walk-settings" onclick="openSettings()" style="display:none">
+                    <span class="btn-arrow">⚙</span>
+                    <span id="txt-walk-settings">הגדרות</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== מסך עסקה ===== -->
+    <div id="screen-trade" class="screen">
+        <div class="gb-frame" style="position:relative">
+
+            <!-- HUD -->
+            <div class="hud-bar">
+                <span class="hud-item">🪙 <span id="trade-coins">0</span></span>
+                <span class="hud-item hud-title-text" id="trade-vendor-name">מוכר</span>
+                <span class="hud-item" id="trade-vendor-emoji">🛒</span>
+            </div>
+
+            <!-- טאבים -->
+            <div class="trade-tabs">
+                <button class="tab-btn active" id="tab-buy" onclick="switchTab('buy')">
+                    🛒 <span id="txt-tab-buy">קנה</span>
+                </button>
+                <button class="tab-btn" id="tab-sell" onclick="switchTab('sell')">
+                    💰 <span id="txt-tab-sell">מכור</span>
+                </button>
+            </div>
+
+            <!-- פאנל קנייה -->
+            <div id="panel-buy" class="trade-panel">
+                <div id="buy-list" class="item-list"></div>
+            </div>
+
+            <!-- פאנל מכירה -->
+            <div id="panel-sell" class="trade-panel" style="display:none">
+                <div id="sell-list" class="item-list"></div>
+            </div>
+
+            <!-- שאלת חשבון (overlay) -->
+            <div id="math-overlay" class="math-overlay" style="display:none">
+                <div class="math-box">
+                    <button class="math-close" onclick="hideMathOverlay()">✕</button>
+                    <div id="math-question" class="math-question"></div>
+                    <div class="math-input-row">
+                        <input type="number" id="math-answer" class="math-input" min="0" max="200"
+                               onkeydown="if(event.key==='Enter') submitAnswer()">
+                        <button class="pixel-btn confirm-btn" onclick="submitAnswer()">✓</button>
+                    </div>
+                    <div id="math-feedback" class="math-feedback"></div>
+                    <div id="math-attempts" class="math-attempts"></div>
+                </div>
+            </div>
+
+            <!-- כפתור חזרה -->
+            <button class="pixel-btn back-btn" onclick="closeTrade()">
+                <span class="btn-arrow">◀</span>
+                <span id="txt-back-trade">חזור לשוק</span>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ===== מסך ניצחון ===== -->
+    <div id="screen-win" class="screen">
+        <div class="gb-frame">
+            <div class="window-header">
+                <span id="txt-win-header">ניצחת!</span>
+            </div>
+            <div class="end-body win-body">
+                <div class="end-art blink">🌟 🏆 🌟</div>
+                <div class="end-title" id="txt-win-title">כל הכבוד!</div>
+                <div class="end-stats">
+                    <div class="stat-row">
+                        <span id="txt-win-coins-label">מטבעות</span>
+                        <span>🪙 <span id="win-coins">0</span></span>
+                    </div>
+                    <div class="stat-row">
+                        <span id="txt-win-vendors-label">דוכנים שביקרת</span>
+                        <span>🏪 <span id="win-vendors">0</span></span>
+                    </div>
+                </div>
+                <div class="end-msg" id="txt-win-msg">הצלחת לאסוף 100 מטבעות!</div>
+            </div>
+            <button class="pixel-btn back-btn" onclick="startGame()">
+                <span class="btn-arrow">▶</span>
+                <span id="txt-win-again">שחק שוב</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== מסך בלונים (ניצחון) ===== -->
+    <div id="screen-balloons" class="screen">
+        <div class="gb-frame">
+            <div class="window-header">
+                <span id="txt-win-header-b">ניצחת! 🎉</span>
+            </div>
+            <div class="balloons-msg" id="txt-pop-balloons">לחצי על הבלונים!</div>
+            <div class="balloons-area" id="balloons-area"></div>
+        </div>
+    </div>
+
+    <!-- ===== מסך הפסד ===== -->
+    <div id="screen-gameover" class="screen">
+        <div class="gb-frame">
+            <div class="window-header">
+                <span id="txt-over-header">אוי לא!</span>
+            </div>
+            <div class="end-body over-body">
+                <div class="end-art">😔 💸 😔</div>
+                <div class="end-title" id="txt-over-title">נגמרו המטבעות</div>
+                <div class="end-stats">
+                    <div class="stat-row">
+                        <span id="txt-over-vendors-label">דוכנים שביקרת</span>
+                        <span>🏪 <span id="over-vendors">0</span></span>
+                    </div>
+                </div>
+                <div class="end-msg" id="txt-over-msg">אין מטבעות ואין מה למכור...</div>
+            </div>
+            <button class="pixel-btn back-btn" onclick="startGame()">
+                <span class="btn-arrow">▶</span>
+                <span id="txt-over-again">נסה שוב</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="music.js"></script>
+    <script src="pixel-walk.js"></script>
+    <script src="data.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
