@@ -183,11 +183,27 @@
             <!-- פאנל קנייה -->
             <div id="panel-buy" class="trade-panel">
                 <div id="buy-list" class="item-list"></div>
+                <div id="buy-cart" class="cart-area" style="display:none">
+                    <div class="cart-header">🛒 <span id="txt-cart-buy">סל קניות</span></div>
+                    <div id="buy-cart-items" class="cart-items"></div>
+                    <div class="cart-footer">
+                        <span class="cart-total"><span id="txt-total-buy">סה"כ</span>: 🪙<span id="buy-cart-total">0</span></span>
+                        <button class="pixel-btn small-btn checkout-btn" id="btn-checkout-buy" onclick="startCheckout(true)">💰 <span id="txt-checkout-buy">שלם</span></button>
+                    </div>
+                </div>
             </div>
 
             <!-- פאנל מכירה -->
             <div id="panel-sell" class="trade-panel" style="display:none">
                 <div id="sell-list" class="item-list"></div>
+                <div id="sell-cart" class="cart-area" style="display:none">
+                    <div class="cart-header">💰 <span id="txt-cart-sell">סל מכירה</span></div>
+                    <div id="sell-cart-items" class="cart-items"></div>
+                    <div class="cart-footer">
+                        <span class="cart-total"><span id="txt-total-sell">סה"כ</span>: 🪙<span id="sell-cart-total">0</span></span>
+                        <button class="pixel-btn small-btn checkout-btn" id="btn-checkout-sell" onclick="startCheckout(false)">💰 <span id="txt-checkout-sell">מכור הכל</span></button>
+                    </div>
+                </div>
             </div>
 
             <!-- שאלת חשבון (overlay) -->

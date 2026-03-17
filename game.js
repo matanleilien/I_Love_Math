@@ -30,6 +30,12 @@ const tradeState = {
     pendingItem:   null,   // { itemId, price, isBuy }
     attempts:      0,
     correctAnswer: null,
+    // סל קניות
+    buyCart:  [],   // [{ itemId, price }]
+    sellCart: [],   // [{ itemId, price }]
+    mathStep: 0,   // 0=total, 1=remaining
+    cartTotal: 0,
+    isBuyCheckout: true,
 };
 
 const MAX_ATTEMPTS = 5;
@@ -93,6 +99,18 @@ const T = {
         balloonColor:   'צבע בלונים',
         popBalloons:    'לחצי על הבלונים!',
         youGot:         'קיבלת:',
+        addToCart:       '+',
+        removeFromCart:  '−',
+        cartBuy:        'סל קניות',
+        cartSell:       'סל מכירה',
+        total:          'סה"כ',
+        checkout:       'שלם',
+        sellAll:        'מכור הכל',
+        mathTotal:      'כמה עולים כל הפריטים בסל ביחד?',
+        mathTotalSell:  'כמה שווים כל הפריטים שאת מוכרת ביחד?',
+        mathRemainBuy:  'יש לך {coins} 🪙\nהסל עולה {total} 🪙\nכמה יישאר לך?',
+        mathRemainSell: 'יש לך {coins} 🪙\nמכרת ב-{total} 🪙\nכמה יהיה לך?',
+        cartItems:      'פריטים בסל:',
     },
     en: {
         title:          'MARKET GIRL',
@@ -142,6 +160,18 @@ const T = {
         balloonColor:   'Balloon Color',
         popBalloons:    'Pop the balloons!',
         youGot:         'You got:',
+        addToCart:       '+',
+        removeFromCart:  '−',
+        cartBuy:        'Shopping Cart',
+        cartSell:       'Sell Cart',
+        total:          'Total',
+        checkout:       'Pay',
+        sellAll:        'Sell All',
+        mathTotal:      'How much do all the items in the cart cost together?',
+        mathTotalSell:  'How much are all the items you are selling worth together?',
+        mathRemainBuy:  'You have {coins} 🪙\nCart costs {total} 🪙\nHow many coins left?',
+        mathRemainSell: 'You have {coins} 🪙\nYou sold for {total} 🪙\nHow many coins total?',
+        cartItems:      'Items in cart:',
     }
 };
 
@@ -325,8 +355,14 @@ function openTrade() {
     document.getElementById('trade-vendor-emoji').textContent = vendor.emoji;
     document.getElementById('trade-coins').textContent        = gameState.coins;
 
+    // איפוס סלים
+    tradeState.buyCart  = [];
+    tradeState.sellCart = [];
+
     buildBuyList(vendor);
     buildSellList(vendor);
+    updateCartDisplay('buy');
+    updateCartDisplay('sell');
     switchTab('buy');
     hideMathOverlay();
 
@@ -345,12 +381,15 @@ function buildBuyList(vendor) {
     }
 
     vendor.forSale.forEach(({ itemId, qty, price }) => {
-        const item      = ITEMS[itemId];
+        const item = ITEMS[itemId];
         if (!item) return;
-        const canAfford = gameState.coins >= price && qty > 0;
+        const inCart = tradeState.buyCart.filter(c => c.itemId === itemId).length;
+        const availQty = qty - inCart;
+        const cartTotal = tradeState.buyCart.reduce((s, c) => s + c.price, 0);
+        const canAdd = availQty > 0 && (gameState.coins - cartTotal) >= price;
 
         const row = document.createElement('div');
-        row.className = 'item-row' + (canAfford ? '' : ' cant-afford');
+        row.className = 'item-row' + (canAdd ? '' : ' cant-afford');
         row.innerHTML = `
             <div class="item-info">
                 <span class="item-emoji">${item.emoji}</span>
@@ -358,10 +397,10 @@ function buildBuyList(vendor) {
                 <span class="item-price">🪙${price}</span>
             </div>
             <div class="item-right">
-                <span class="item-stock">x${qty}</span>
-                <button class="pixel-btn small-btn" ${canAfford ? '' : 'disabled'}
-                    onclick="startBuy('${itemId}', ${price})">
-                    ${t.buyBtn}
+                <span class="item-stock">x${availQty}</span>
+                <button class="pixel-btn small-btn cart-add-btn" ${canAdd ? '' : 'disabled'}
+                    onclick="addToCart(true, '${itemId}', ${price})">
+                    ${t.addToCart}
                 </button>
             </div>`;
         list.appendChild(row);
@@ -381,7 +420,6 @@ function buildSellList(vendor) {
         return;
     }
 
-    // פריטים שהמוכר מוכר בעצמו = תחום המומחיות שלו → מחיר טוב יותר
     const specialtyIds = vendor.forSale.map(i => i.itemId);
 
     sellable.forEach(({ itemId, qty }) => {
@@ -390,6 +428,9 @@ function buildSellList(vendor) {
         const isSpecialty = specialtyIds.includes(itemId);
         const rate        = isSpecialty ? vendor.buyRate : vendor.buyRate * 0.5;
         const sellPrice   = calcPrice(item.basePrice, rate);
+        const inCart = tradeState.sellCart.filter(c => c.itemId === itemId).length;
+        const availQty = qty - inCart;
+        const canAdd = availQty > 0;
 
         const row = document.createElement('div');
         row.className = 'item-row';
@@ -400,14 +441,67 @@ function buildSellList(vendor) {
                 <span class="item-price">🪙${sellPrice}</span>
             </div>
             <div class="item-right">
-                <span class="item-stock">x${qty}</span>
-                <button class="pixel-btn small-btn"
-                    onclick="startSell('${itemId}', ${sellPrice})">
-                    ${t.sellBtn}
+                <span class="item-stock">x${availQty}</span>
+                <button class="pixel-btn small-btn cart-add-btn" ${canAdd ? '' : 'disabled'}
+                    onclick="addToCart(false, '${itemId}', ${sellPrice})">
+                    ${t.addToCart}
                 </button>
             </div>`;
         list.appendChild(row);
     });
+}
+
+// ---- סל קניות ----
+
+function addToCart(isBuy, itemId, price) {
+    const cart = isBuy ? tradeState.buyCart : tradeState.sellCart;
+    cart.push({ itemId, price });
+    refreshTradeUI();
+}
+
+function removeFromCart(isBuy, index) {
+    const cart = isBuy ? tradeState.buyCart : tradeState.sellCart;
+    cart.splice(index, 1);
+    refreshTradeUI();
+}
+
+function refreshTradeUI() {
+    const vendor = gameState.currentVendor;
+    buildBuyList(vendor);
+    buildSellList(vendor);
+    updateCartDisplay('buy');
+    updateCartDisplay('sell');
+}
+
+function updateCartDisplay(type) {
+    const isBuy = type === 'buy';
+    const cart = isBuy ? tradeState.buyCart : tradeState.sellCart;
+    const lang = gameState.language;
+    const t = T[lang];
+
+    const areaEl = document.getElementById(isBuy ? 'buy-cart' : 'sell-cart');
+    const itemsEl = document.getElementById(isBuy ? 'buy-cart-items' : 'sell-cart-items');
+    const totalEl = document.getElementById(isBuy ? 'buy-cart-total' : 'sell-cart-total');
+
+    if (!cart.length) {
+        areaEl.style.display = 'none';
+        return;
+    }
+
+    areaEl.style.display = 'block';
+    itemsEl.innerHTML = '';
+
+    cart.forEach((entry, i) => {
+        const item = ITEMS[entry.itemId];
+        if (!item) return;
+        const chip = document.createElement('span');
+        chip.className = 'cart-chip';
+        chip.innerHTML = `${item.emoji} 🪙${entry.price} <button class="cart-remove" onclick="removeFromCart(${isBuy}, ${i})">✕</button>`;
+        itemsEl.appendChild(chip);
+    });
+
+    const total = cart.reduce((s, c) => s + c.price, 0);
+    totalEl.textContent = total;
 }
 
 function switchTab(tab) {
@@ -417,40 +511,30 @@ function switchTab(tab) {
     document.getElementById('tab-sell').classList.toggle('active', tab === 'sell');
 }
 
-// ---- שאלות חשבון ----
+// ---- שאלות חשבון (סל קניות) ----
 
-function startBuy(itemId, price) {
+function startCheckout(isBuy) {
+    const cart = isBuy ? tradeState.buyCart : tradeState.sellCart;
+    if (!cart.length) return;
+
     const lang = gameState.language;
-    const item = ITEMS[itemId];
     const t    = T[lang];
+    const total = cart.reduce((s, c) => s + c.price, 0);
 
-    tradeState.pendingItem   = { itemId, price, isBuy: true };
+    tradeState.isBuyCheckout = isBuy;
+    tradeState.cartTotal     = total;
+    tradeState.mathStep      = 0;  // שלב 1: חשב סה"כ
     tradeState.attempts      = 0;
-    tradeState.correctAnswer = gameState.coins - price;
+    tradeState.correctAnswer = total;
 
-    const q = t.mathBuy
-        .replace('{coins}', gameState.coins)
-        .replace('{item}',  item[lang])
-        .replace('{price}', price);
+    // הצג שאלה 1: כמה עולים כל הפריטים ביחד?
+    const itemsList = cart.map(c => {
+        const item = ITEMS[c.itemId];
+        return item ? `${item.emoji} 🪙${c.price}` : '';
+    }).join('  +  ');
 
-    showMathOverlay(q);
-}
-
-function startSell(itemId, sellPrice) {
-    const lang = gameState.language;
-    const item = ITEMS[itemId];
-    const t    = T[lang];
-
-    tradeState.pendingItem   = { itemId, price: sellPrice, isBuy: false };
-    tradeState.attempts      = 0;
-    tradeState.correctAnswer = gameState.coins + sellPrice;
-
-    const q = t.mathSell
-        .replace('{coins}', gameState.coins)
-        .replace('{item}',  item[lang])
-        .replace('{price}', sellPrice);
-
-    showMathOverlay(q);
+    const question = (isBuy ? t.mathTotal : t.mathTotalSell) + '\n\n' + itemsList;
+    showMathOverlay(question);
 }
 
 function showMathOverlay(question) {
@@ -474,13 +558,37 @@ function submitAnswer() {
     const t    = T[lang];
 
     if (val === tradeState.correctAnswer) {
-        const won = completeTrade();
         document.getElementById('math-feedback').textContent = t.correct;
-        if (!won) {
+
+        if (tradeState.mathStep === 0) {
+            // שלב 1 נכון → עבור לשלב 2: כמה יישאר/יהיה
             setTimeout(() => {
-                hideMathOverlay();
-                openTrade(); // רענון רשימות
+                tradeState.mathStep = 1;
+                tradeState.attempts = 0;
+
+                if (tradeState.isBuyCheckout) {
+                    tradeState.correctAnswer = gameState.coins - tradeState.cartTotal;
+                    const q = t.mathRemainBuy
+                        .replace('{coins}', gameState.coins)
+                        .replace('{total}', tradeState.cartTotal);
+                    showMathOverlay(q);
+                } else {
+                    tradeState.correctAnswer = gameState.coins + tradeState.cartTotal;
+                    const q = t.mathRemainSell
+                        .replace('{coins}', gameState.coins)
+                        .replace('{total}', tradeState.cartTotal);
+                    showMathOverlay(q);
+                }
             }, 900);
+        } else {
+            // שלב 2 נכון → בצע עסקה
+            const won = completeCartTrade();
+            if (!won) {
+                setTimeout(() => {
+                    hideMathOverlay();
+                    openTrade();
+                }, 900);
+            }
         }
     } else {
         tradeState.attempts++;
@@ -488,7 +596,13 @@ function submitAnswer() {
             document.getElementById('math-feedback').textContent =
                 `${t.answerWas} ${tradeState.correctAnswer}`;
             document.getElementById('math-attempts').textContent = '';
-            setTimeout(hideMathOverlay, 2000);
+            // כישלון → ריקון הסל, לא מבצעים עסקה
+            setTimeout(() => {
+                hideMathOverlay();
+                tradeState.buyCart = [];
+                tradeState.sellCart = [];
+                refreshTradeUI();
+            }, 2000);
         } else {
             document.getElementById('math-feedback').textContent = t.tryAgain;
             document.getElementById('math-attempts').textContent =
@@ -499,22 +613,29 @@ function submitAnswer() {
     }
 }
 
-function completeTrade() {
-    const { itemId, price, isBuy } = tradeState.pendingItem;
+function completeCartTrade() {
+    const isBuy = tradeState.isBuyCheckout;
+    const cart = isBuy ? tradeState.buyCart : tradeState.sellCart;
 
-    if (isBuy) {
-        gameState.coins -= price;
-        const existing = gameState.inventory.find(i => i.itemId === itemId);
-        if (existing) existing.qty++;
-        else          gameState.inventory.push({ itemId, qty: 1 });
+    cart.forEach(({ itemId, price }) => {
+        if (isBuy) {
+            gameState.coins -= price;
+            const existing = gameState.inventory.find(i => i.itemId === itemId);
+            if (existing) existing.qty++;
+            else gameState.inventory.push({ itemId, qty: 1 });
 
-        const vendorItem = gameState.currentVendor.forSale.find(i => i.itemId === itemId);
-        if (vendorItem) vendorItem.qty--;
-    } else {
-        gameState.coins += price;
-        const existing = gameState.inventory.find(i => i.itemId === itemId);
-        if (existing) existing.qty = Math.max(0, existing.qty - 1);
-    }
+            const vendorItem = gameState.currentVendor.forSale.find(i => i.itemId === itemId);
+            if (vendorItem) vendorItem.qty--;
+        } else {
+            gameState.coins += price;
+            const existing = gameState.inventory.find(i => i.itemId === itemId);
+            if (existing) existing.qty = Math.max(0, existing.qty - 1);
+        }
+    });
+
+    // ריקון הסל
+    tradeState.buyCart = [];
+    tradeState.sellCart = [];
 
     document.getElementById('trade-coins').textContent = gameState.coins;
     updateHUD();
