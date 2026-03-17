@@ -416,8 +416,8 @@ html[dir="ltr"] .pixel-btn {
 /* ── Pixel-art walking canvas — 480×216 main, 320×144 offscreen blit */
 #walk-canvas {
     display: block;
-    width: 580px;
-    height: 218px;
+    width: 100%;
+    height: auto;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
