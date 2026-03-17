@@ -60,7 +60,7 @@ body {
 
 /* ---- מסגרת GameBoy ---- */
 .gb-frame {
-    width: 480px;
+    width: 580px;
     background: var(--gb-screen);
     border: 4px solid var(--gb-black);
 
@@ -416,8 +416,8 @@ html[dir="ltr"] .pixel-btn {
 /* ── Pixel-art walking canvas — 480×216 main, 320×144 offscreen blit */
 #walk-canvas {
     display: block;
-    width: 480px;
-    height: 180px;
+    width: 580px;
+    height: 218px;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
@@ -970,7 +970,7 @@ html[dir="ltr"] .pixel-btn {
 }
 
 /* ---- רספונסיביות ---- */
-@media (max-width: 520px) {
+@media (max-width: 620px) {
     .gb-frame {
         width: 100vw;
         box-shadow: none;

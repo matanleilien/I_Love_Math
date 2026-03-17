@@ -111,6 +111,7 @@ const T = {
         mathRemainBuy:  'יש לך {coins} 🪙\nהסל עולה {total} 🪙\nכמה יישאר לך?',
         mathRemainSell: 'יש לך {coins} 🪙\nמכרת ב-{total} 🪙\nכמה יהיה לך?',
         cartItems:      'פריטים בסל:',
+        items:          'פריטים',
     },
     en: {
         title:          'MARKET GIRL',
@@ -172,6 +173,7 @@ const T = {
         mathRemainBuy:  'You have {coins} 🪙\nCart costs {total} 🪙\nHow many coins left?',
         mathRemainSell: 'You have {coins} 🪙\nYou sold for {total} 🪙\nHow many coins total?',
         cartItems:      'Items in cart:',
+        items:          'items',
     }
 };
 
@@ -481,7 +483,7 @@ function updateCartDisplay(type) {
 
     const areaEl = document.getElementById(isBuy ? 'buy-cart' : 'sell-cart');
     const itemsEl = document.getElementById(isBuy ? 'buy-cart-items' : 'sell-cart-items');
-    const totalEl = document.getElementById(isBuy ? 'buy-cart-total' : 'sell-cart-total');
+    const countEl = document.getElementById(isBuy ? 'buy-cart-count' : 'sell-cart-count');
 
     if (!cart.length) {
         areaEl.style.display = 'none';
@@ -496,12 +498,11 @@ function updateCartDisplay(type) {
         if (!item) return;
         const chip = document.createElement('span');
         chip.className = 'cart-chip';
-        chip.innerHTML = `${item.emoji} 🪙${entry.price} <button class="cart-remove" onclick="removeFromCart(${isBuy}, ${i})">✕</button>`;
+        chip.innerHTML = `${item.emoji} <button class="cart-remove" onclick="removeFromCart(${isBuy}, ${i})">✕</button>`;
         itemsEl.appendChild(chip);
     });
 
-    const total = cart.reduce((s, c) => s + c.price, 0);
-    totalEl.textContent = total;
+    countEl.textContent = cart.length;
 }
 
 function switchTab(tab) {
