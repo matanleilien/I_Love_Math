@@ -379,6 +379,62 @@ html[dir="ltr"] .pixel-btn {
 }
 
 /* ============================
+   מסך הוראות
+   ============================ */
+
+.instructions-body {
+    padding: 12px 0;
+    background: var(--gb-screen);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.instructions-section {
+    padding: 16px 24px;
+    border-bottom: 2px solid var(--gb-pale);
+}
+
+.instructions-section:last-child {
+    border-bottom: none;
+}
+
+.instructions-heading {
+    font-size: 13px;
+    color: var(--gb-black);
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.instructions-text {
+    font-size: 11px;
+    color: var(--gb-dark);
+    line-height: 2.6;
+    white-space: pre-line;
+}
+
+.page-indicator {
+    font-size: 8px;
+    color: var(--accent-gold);
+    margin-right: 8px;
+}
+
+html[dir="ltr"] .page-indicator {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.instr-next-btn {
+    background: var(--gb-dark) !important;
+    flex-direction: row-reverse;
+}
+
+.instr-next-btn:hover {
+    background: var(--gb-mid) !important;
+}
+
+/* ============================
    מסך הליכה בשוק
    ============================ */
 

@@ -32,6 +32,10 @@
                     <span class="btn-arrow">⚙</span>
                     <span id="txt-settings-btn">הגדרות</span>
                 </button>
+                <button class="pixel-btn" onclick="openInstructions()">
+                    <span class="btn-arrow">📖</span>
+                    <span id="txt-instructions-btn">הוראות</span>
+                </button>
             </div>
 
             <div class="press-start blink" id="txt-press">לחץ כדי להתחיל</div>
@@ -112,6 +116,78 @@
         </div>
     </div>
 
+    <!-- ===== מסך הוראות - עמוד 1 ===== -->
+    <div id="screen-instructions-1" class="screen">
+        <div class="gb-frame">
+
+            <div class="window-header">
+                <span id="txt-instructions-title-1">הוראות המשחק</span>
+                <span class="page-indicator">1 / 2</span>
+            </div>
+
+            <div class="instructions-body">
+
+                <div class="instructions-section">
+                    <div class="instructions-heading" id="txt-instr-goal-title">🎯 מטרת המשחק</div>
+                    <div class="instructions-text" id="txt-instr-goal">אספו מטבעות על ידי קנייה ומכירה חכמה בשוק!
+
+הגיעו ליעד המטבעות כדי לנצח.</div>
+                </div>
+
+                <div class="instructions-section">
+                    <div class="instructions-heading" id="txt-instr-how-title">🛒 איך משחקים?</div>
+                    <div class="instructions-text" id="txt-instr-how">הילדה מסיירת בשוק ופוגשת מוכרים.
+
+אפשר לקנות פריטים במחיר זול ולמכור אותם במחיר גבוה יותר אצל מוכר אחר.</div>
+                </div>
+
+            </div>
+
+            <button class="pixel-btn back-btn instr-next-btn" onclick="showScreen('screen-instructions-2')">
+                <span id="txt-instr-next">עמוד הבא</span>
+                <span class="btn-arrow">◀</span>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ===== מסך הוראות - עמוד 2 ===== -->
+    <div id="screen-instructions-2" class="screen">
+        <div class="gb-frame">
+
+            <div class="window-header">
+                <span id="txt-instructions-title-2">הוראות המשחק</span>
+                <span class="page-indicator">2 / 2</span>
+            </div>
+
+            <div class="instructions-body">
+
+                <div class="instructions-section">
+                    <div class="instructions-heading" id="txt-instr-math-title">🧮 שאלות חשבון</div>
+                    <div class="instructions-text" id="txt-instr-math">בכל קנייה או מכירה צריך לפתור שאלות חשבון: חיבור וחיסור.
+
+טעיתם 5 פעמים? העסקה מתבטלת!</div>
+                </div>
+
+                <div class="instructions-section">
+                    <div class="instructions-heading" id="txt-instr-tips-title">💡 טיפים</div>
+                    <div class="instructions-text" id="txt-instr-tips">• קנו בזול ומכרו ביוקר
+
+• שימו לב למחירים אצל כל מוכר
+
+• אם נגמרו המטבעות והפריטים - המשחק נגמר!</div>
+                </div>
+
+            </div>
+
+            <button class="pixel-btn back-btn" onclick="closeInstructions()">
+                <span class="btn-arrow">◀</span>
+                <span id="txt-back-instr">חזור לתפריט</span>
+            </button>
+
+        </div>
+    </div>
+
     <!-- ===== מסך הליכה בשוק ===== -->
     <div id="screen-walk" class="screen">
         <div class="gb-frame">
@@ -136,7 +212,7 @@
 
             <!-- תיבת הודעה -->
             <div class="message-box">
-                <div class="message-portrait" id="msg-portrait">🧒‍♀️</div>
+                <div class="message-portrait" id="msg-portrait">🧒</div>
                 <div class="message-text" id="walk-message">הילדה יוצאת לשוק...</div>
             </div>
 

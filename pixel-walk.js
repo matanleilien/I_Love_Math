@@ -18,8 +18,9 @@ class PixelWalk {
     this.isRTL     = (data.language === 'he');
 
     const margin   = 32;
+    const stopDist = 64;  // stop before the stall
     this.charX     = this.isRTL ? this.W - margin : margin;
-    this.targetX   = this.isRTL ? margin           : this.W - margin;
+    this.targetX   = this.isRTL ? margin + stopDist : this.W - margin - stopDist;
 
     this.marketScroll = 0;
     this.walkTick     = 0;
@@ -235,17 +236,62 @@ class PixelWalk {
     const prevX = this.isRTL ? W-28 : 28;
     const nextX = this.isRTL ? 28    : W-28;
 
+    // previous stall (faded)
     ctx.globalAlpha = 0.25;
     ctx.font = '22px serif';
     ctx.fillText(this.prevEmoji, prevX, GY-2);
     ctx.globalAlpha = 1;
 
-    ctx.font = '26px serif';
-    ctx.fillText(this.vendor.emoji || '🏪', nextX, GY-2);
+    // ── next stall: draw a visible market booth ──
+    const sx = nextX;
+    const sy = GY;
 
-    ctx.font = '7px "Press Start 2P", monospace';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(this.vendor.name || '', nextX, GY+18);
+    // stall counter / table
+    ctx.fillStyle = '#8B5E3C';
+    ctx.fillRect(sx-36, sy-26, 72, 26);
+    ctx.fillStyle = '#A0703C';
+    ctx.fillRect(sx-36, sy-26, 72, 5);
+    ctx.fillStyle = '#6B3E1C';
+    ctx.fillRect(sx-36, sy-2, 72, 2);
+    // table legs
+    ctx.fillStyle = '#5C2E0C';
+    ctx.fillRect(sx-34, sy-2, 5, 5);
+    ctx.fillRect(sx+29, sy-2, 5, 5);
+
+    // awning / roof
+    ctx.fillStyle = '#E83030';
+    ctx.fillRect(sx-40, sy-68, 80, 18);
+    ctx.fillStyle = '#FF6040';
+    for (let ax = sx-38; ax < sx+38; ax += 10) {
+      ctx.fillRect(ax, sy-68, 5, 18);
+    }
+    // awning border
+    ctx.fillStyle = '#A01818';
+    ctx.fillRect(sx-40, sy-52, 80, 3);
+    // scalloped edge
+    ctx.fillStyle = '#E83030';
+    for (let ax = sx-38; ax < sx+38; ax += 10) {
+      ctx.fillRect(ax, sy-49, 8, 5);
+    }
+    // awning poles
+    ctx.fillStyle = '#5C2E0C';
+    ctx.fillRect(sx-38, sy-68, 4, 68);
+    ctx.fillRect(sx+34, sy-68, 4, 68);
+
+    // vendor emoji (large)
+    ctx.font = '42px serif';
+    ctx.fillText(this.vendor.emoji || '🏪', sx, sy-24);
+
+    // name sign
+    ctx.fillStyle = '#FFF8E0';
+    const nameW = Math.max(74, (this.vendor.name || '').length * 8 + 20);
+    ctx.fillRect(sx - nameW/2, sy-84, nameW, 16);
+    ctx.fillStyle = '#5C2E0C';
+    ctx.fillRect(sx - nameW/2, sy-84, nameW, 2);
+    ctx.fillRect(sx - nameW/2, sy-70, nameW, 2);
+    ctx.font = '9px "Press Start 2P", monospace';
+    ctx.fillStyle = '#2a1008';
+    ctx.fillText(this.vendor.name || '', sx, sy-70);
   }
 
   /* ── CHARACTER (high fidelity) ── */

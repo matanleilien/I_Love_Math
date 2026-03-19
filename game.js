@@ -98,6 +98,18 @@ const T = {
         walkSettings:   'הגדרות',
         balloonColor:   'צבע בלונים',
         popBalloons:    'לחצי על הבלונים!',
+        instructionsBtn:'הוראות',
+        instructionsTitle:'הוראות המשחק',
+        instrGoalTitle: '🎯 מטרת המשחק',
+        instrGoal:      'אספו מטבעות על ידי קנייה ומכירה חכמה בשוק! הגיעו ליעד המטבעות כדי לנצח.',
+        instrHowTitle:  '🛒 איך משחקים?',
+        instrHow:       'הילדה מסיירת בשוק ופוגשת מוכרים. אפשר לקנות פריטים במחיר זול ולמכור אותם במחיר גבוה יותר אצל מוכר אחר.',
+        instrMathTitle: '🧮 שאלות חשבון',
+        instrMath:      'בכל קנייה או מכירה צריך לפתור שאלות חשבון: חיבור וחיסור. טעיתם 5 פעמים? העסקה מתבטלת!',
+        instrTipsTitle: '💡 טיפים',
+        instrTips:      '• קנו בזול ומכרו ביוקר\n\n• שימו לב למחירים אצל כל מוכר\n\n• אם נגמרו המטבעות והפריטים - המשחק נגמר!',
+        backInstr:      'חזור לתפריט',
+        instrNext:      'עמוד הבא',
         youGot:         'קיבלת:',
         addToCart:       '+',
         removeFromCart:  '−',
@@ -160,6 +172,18 @@ const T = {
         walkSettings:   'Settings',
         balloonColor:   'Balloon Color',
         popBalloons:    'Pop the balloons!',
+        instructionsBtn:'Instructions',
+        instructionsTitle:'How to Play',
+        instrGoalTitle: '🎯 Goal',
+        instrGoal:      'Collect coins by buying and selling smartly at the market! Reach the coin goal to win.',
+        instrHowTitle:  '🛒 How to Play?',
+        instrHow:       'The girl walks through the market meeting vendors. Buy items cheap and sell them for more at another vendor.',
+        instrMathTitle: '🧮 Math Questions',
+        instrMath:      'Each buy or sell requires solving math questions: addition and subtraction. Wrong 5 times? The deal is cancelled!',
+        instrTipsTitle: '💡 Tips',
+        instrTips:      '• Buy low, sell high\n\n• Compare prices between vendors\n\n• If you run out of coins and items - game over!',
+        backInstr:      'Back to Menu',
+        instrNext:      'Next Page',
         youGot:         'You got:',
         addToCart:       '+',
         removeFromCart:  '−',
@@ -211,6 +235,19 @@ const textMap = {
     'txt-walk-settings':  'walkSettings',
     'txt-balloon-color':  'balloonColor',
     'txt-pop-balloons':   'popBalloons',
+    'txt-instructions-btn':'instructionsBtn',
+    'txt-instructions-title-1':'instructionsTitle',
+    'txt-instructions-title-2':'instructionsTitle',
+    'txt-instr-next':     'instrNext',
+    'txt-instr-goal-title':'instrGoalTitle',
+    'txt-instr-goal':     'instrGoal',
+    'txt-instr-how-title':'instrHowTitle',
+    'txt-instr-how':      'instrHow',
+    'txt-instr-math-title':'instrMathTitle',
+    'txt-instr-math':     'instrMath',
+    'txt-instr-tips-title':'instrTipsTitle',
+    'txt-instr-tips':     'instrTips',
+    'txt-back-instr':     'backInstr',
 };
 
 function updateTexts() {
@@ -242,6 +279,8 @@ function showScreen(screenId) {
     // מוסיקה לכל מסך
     const musicMap = {
         'screen-title': 'title',
+        'screen-instructions-1': 'title',
+        'screen-instructions-2': 'title',
         'screen-walk': 'walk',
         'screen-trade': 'trade',
         'screen-win': 'win',
@@ -259,6 +298,15 @@ function openSettings() {
 
 function closeSettings() {
     showScreen(previousScreen);
+}
+
+function openInstructions() {
+    previousScreen = 'screen-title';
+    showScreen('screen-instructions-1');
+}
+
+function closeInstructions() {
+    showScreen('screen-title');
 }
 
 // ---- אתחול מלאי ----
@@ -325,7 +373,7 @@ function walkToNextVendor(firstTime = false) {
     document.getElementById('btn-talk').style.display = 'none';
     document.getElementById('btn-next').style.display = 'none';
     document.getElementById('btn-walk-settings').style.display = 'none';
-    setMessage(firstTime ? t.walkMsg1 : t.walkMsg2, '🧒‍♀️');
+    setMessage(firstTime ? t.walkMsg1 : t.walkMsg2, '🧒');
 
     if (pixelWalk) pixelWalk.stop();
     const canvas = document.getElementById('walk-canvas');
@@ -338,7 +386,7 @@ function walkToNextVendor(firstTime = false) {
 }
 
 // ---- עדכון תיבת הודעה ----
-function setMessage(text, portrait = '🧒‍♀️') {
+function setMessage(text, portrait = '🧒') {
     const msgEl  = document.getElementById('walk-message');
     const portEl = document.getElementById('msg-portrait');
     if (msgEl)  msgEl.textContent  = text;
