@@ -119,24 +119,40 @@ const VENDOR_TYPES = [
 // ---- שמות מוכרים ----
 const VENDOR_NAMES = {
     he: {
-        first: ['רחל', 'דינה', 'מרים', 'אסתר', 'שרה', 'חנה',
-                'שלמה', 'דוד', 'אברהם', 'יעקב', 'נועה', 'תמר',
-                'ליאת', 'יוסף', 'בנימין', 'רות'],
-        title: {
+        male:   ['שלמה', 'דוד', 'אברהם', 'יעקב', 'יוסף', 'בנימין', 'משה', 'אליהו'],
+        female: ['רחל', 'דינה', 'מרים', 'אסתר', 'שרה', 'חנה', 'נועה', 'תמר', 'ליאת', 'רות'],
+        titleM: {
             food:       'המוכר',
-            craft:      'המוכרת',
+            craft:      'המוכר',
             toy:        'המוכר',
             clothing:   'הסוחר',
             household:  'המוכר',
             stationery: 'הסופר',
             mixed:      'הסוחר',
+        },
+        titleF: {
+            food:       'המוכרת',
+            craft:      'המוכרת',
+            toy:        'המוכרת',
+            clothing:   'הסוחרת',
+            household:  'המוכרת',
+            stationery: 'הסופרת',
+            mixed:      'הסוחרת',
         }
     },
     en: {
-        first: ['Rachel', 'Dina', 'Miriam', 'Esther', 'Sara', 'Hannah',
-                'Solomon', 'David', 'Abraham', 'Jacob', 'Noah', 'Tamar',
-                'Lia', 'Joseph', 'Benjamin', 'Ruth'],
-        title: {
+        male:   ['Solomon', 'David', 'Abraham', 'Jacob', 'Joseph', 'Benjamin', 'Moses', 'Elijah'],
+        female: ['Rachel', 'Dina', 'Miriam', 'Esther', 'Sara', 'Hannah', 'Noah', 'Tamar', 'Lia', 'Ruth'],
+        titleM: {
+            food:       'the Grocer',
+            craft:      'the Artisan',
+            toy:        'the Toy Seller',
+            clothing:   'the Tailor',
+            household:  'the Merchant',
+            stationery: 'the Scribe',
+            mixed:      'the Trader',
+        },
+        titleF: {
             food:       'the Grocer',
             craft:      'the Artisan',
             toy:        'the Toy Seller',
@@ -182,13 +198,13 @@ function generateVendor(vendorNumber, language) {
     const markup  = type.markup  * personalFactor;
     const buyRate = type.buyRate * personalFactor;
 
-    // שם אקראי
+    // שם אקראי עם התאמת מגדר
     const names = VENDOR_NAMES[language];
-    const firstName = names.first[Math.floor(Math.random() * names.first.length)];
-    const title = names.title[type.id];
-    const name = language === 'he'
-        ? `${firstName} ${title}`
-        : `${firstName} ${title}`;
+    const isFemale = Math.random() < 0.5;
+    const nameList = isFemale ? names.female : names.male;
+    const firstName = nameList[Math.floor(Math.random() * nameList.length)];
+    const title = isFemale ? names.titleF[type.id] : names.titleM[type.id];
+    const name = `${firstName} ${title}`;
 
     // ברכה אקראית
     const greetings = VENDOR_GREETINGS[language];
@@ -205,6 +221,7 @@ function generateVendor(vendorNumber, language) {
         number: vendorNumber,
         typeId: type.id,
         name,
+        isFemale,
         emoji: type.emoji,
         greeting,
         markup: parseFloat(markup.toFixed(2)),

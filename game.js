@@ -63,6 +63,7 @@ const T = {
         goalLabel:      'יעד לניצחון',
         back:           'חזור',
         vendorLabel:    'מוכר',
+        vendorLabelF:   'מוכרת',
         bannerText:     'שוק הכפר',
         talkBtn:        'דבר עם המוכר',
         nextVendor:     'עבור לדוכן הבא',
@@ -137,6 +138,7 @@ const T = {
         goalLabel:      'Win Goal',
         back:           'BACK',
         vendorLabel:    'Vendor',
+        vendorLabelF:   'Vendor',
         bannerText:     'Village Market',
         talkBtn:        'Talk to Vendor',
         nextVendor:     'Next Stall',
@@ -351,7 +353,9 @@ function updateHUD() {
     const vl = document.getElementById('walk-vendor-label');
     if (vl) {
         const t = T[gameState.language];
-        vl.textContent = `${t.vendorLabel} ${gameState.vendorCount + 1}`;
+        const vendor = gameState.currentVendor;
+        const label = (vendor && vendor.isFemale) ? t.vendorLabelF : t.vendorLabel;
+        vl.textContent = `${label} ${gameState.vendorCount}`;
     }
 }
 
