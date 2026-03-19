@@ -459,18 +459,17 @@ class PixelWalk {
     ctx.save();
     ctx.translate(cx, cy);
     ctx.scale(this.excScale, this.excScale);
-    // background bubble (white)
-    this._px(-12, -24, 24, 30, '#FFFFFF');
-    this._px(-10, -22, 20, 26, '#FFFFFF');
+    // background bubble (white, larger)
+    this._px(-16, -32, 32, 42, '#FFFFFF');
     // border
-    this._px(-12, -24, 24, 2, '#333333');
-    this._px(-12, 4, 24, 2, '#333333');
-    this._px(-12, -24, 2, 30, '#333333');
-    this._px(10, -24, 2, 30, '#333333');
-    // vertical bar of "!" (red)
-    this._px(-3, -20, 6, 16, '#E83030');
+    this._px(-16, -32, 32, 3, '#333333');
+    this._px(-16, 7, 32, 3, '#333333');
+    this._px(-16, -32, 3, 42, '#333333');
+    this._px(13, -32, 3, 42, '#333333');
+    // vertical bar of "!" (red, thick)
+    this._px(-4, -26, 8, 22, '#E83030');
     // dot of "!" (red)
-    this._px(-3, 0, 6, 6, '#E83030');
+    this._px(-4, 0, 8, 8, '#E83030');
     ctx.restore();
   }
 }
