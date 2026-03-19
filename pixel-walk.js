@@ -248,50 +248,50 @@ class PixelWalk {
 
     // stall counter / table
     ctx.fillStyle = '#8B5E3C';
-    ctx.fillRect(sx-36, sy-26, 72, 26);
+    ctx.fillRect(sx-46, sy-32, 92, 32);
     ctx.fillStyle = '#A0703C';
-    ctx.fillRect(sx-36, sy-26, 72, 5);
+    ctx.fillRect(sx-46, sy-32, 92, 6);
     ctx.fillStyle = '#6B3E1C';
-    ctx.fillRect(sx-36, sy-2, 72, 2);
+    ctx.fillRect(sx-46, sy-2, 92, 3);
     // table legs
     ctx.fillStyle = '#5C2E0C';
-    ctx.fillRect(sx-34, sy-2, 5, 5);
-    ctx.fillRect(sx+29, sy-2, 5, 5);
+    ctx.fillRect(sx-44, sy-2, 6, 6);
+    ctx.fillRect(sx+38, sy-2, 6, 6);
 
     // awning / roof
     ctx.fillStyle = '#E83030';
-    ctx.fillRect(sx-40, sy-68, 80, 18);
+    ctx.fillRect(sx-52, sy-82, 104, 22);
     ctx.fillStyle = '#FF6040';
-    for (let ax = sx-38; ax < sx+38; ax += 10) {
-      ctx.fillRect(ax, sy-68, 5, 18);
+    for (let ax = sx-50; ax < sx+50; ax += 12) {
+      ctx.fillRect(ax, sy-82, 6, 22);
     }
     // awning border
     ctx.fillStyle = '#A01818';
-    ctx.fillRect(sx-40, sy-52, 80, 3);
+    ctx.fillRect(sx-52, sy-62, 104, 3);
     // scalloped edge
     ctx.fillStyle = '#E83030';
-    for (let ax = sx-38; ax < sx+38; ax += 10) {
-      ctx.fillRect(ax, sy-49, 8, 5);
+    for (let ax = sx-50; ax < sx+50; ax += 12) {
+      ctx.fillRect(ax, sy-59, 10, 6);
     }
     // awning poles
     ctx.fillStyle = '#5C2E0C';
-    ctx.fillRect(sx-38, sy-68, 4, 68);
-    ctx.fillRect(sx+34, sy-68, 4, 68);
+    ctx.fillRect(sx-50, sy-82, 5, 82);
+    ctx.fillRect(sx+45, sy-82, 5, 82);
 
     // vendor emoji (large)
-    ctx.font = '42px serif';
-    ctx.fillText(this.vendor.emoji || '🏪', sx, sy-24);
+    ctx.font = '52px serif';
+    ctx.fillText(this.vendor.emoji || '🏪', sx, sy-30);
 
     // name sign
     ctx.fillStyle = '#FFF8E0';
-    const nameW = Math.max(74, (this.vendor.name || '').length * 8 + 20);
-    ctx.fillRect(sx - nameW/2, sy-84, nameW, 16);
+    const nameW = Math.max(96, (this.vendor.name || '').length * 10 + 24);
+    ctx.fillRect(sx - nameW/2, sy-102, nameW, 20);
     ctx.fillStyle = '#5C2E0C';
-    ctx.fillRect(sx - nameW/2, sy-84, nameW, 2);
-    ctx.fillRect(sx - nameW/2, sy-70, nameW, 2);
-    ctx.font = '9px "Press Start 2P", monospace';
+    ctx.fillRect(sx - nameW/2, sy-102, nameW, 3);
+    ctx.fillRect(sx - nameW/2, sy-84, nameW, 3);
+    ctx.font = '12px "Press Start 2P", monospace';
     ctx.fillStyle = '#2a1008';
-    ctx.fillText(this.vendor.name || '', sx, sy-70);
+    ctx.fillText(this.vendor.name || '', sx, sy-85);
   }
 
   /* ── CHARACTER (high fidelity) ── */
