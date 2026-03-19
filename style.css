@@ -98,7 +98,7 @@ body {
 .window-header {
     background: var(--gb-black);
     color: var(--gb-pale);
-    font-size: 11px;
+    font-size: 14px;
     padding: 10px 16px;
     text-align: center;
     letter-spacing: 2px;
@@ -114,7 +114,7 @@ body {
 }
 
 .title-main {
-    font-size: 20px;
+    font-size: 24px;
     color: var(--accent-gold);
     text-shadow:
         2px 2px 0 var(--gb-black),
@@ -124,7 +124,7 @@ body {
 }
 
 .title-sub {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--gb-pale);
     margin-top: 8px;
     letter-spacing: 3px;
@@ -139,7 +139,7 @@ body {
 }
 
 .art-row {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1.8;
     letter-spacing: 8px;
 }
@@ -156,7 +156,7 @@ body {
 /* ---- כפתורי פיקסל ---- */
 .pixel-btn {
     font-family: var(--font-main);
-    font-size: 11px;
+    font-size: 13px;
     padding: 14px 20px;
     background: var(--gb-dark);
     color: var(--gb-cream);
@@ -204,7 +204,7 @@ html[dir="ltr"] .pixel-btn {
 
 /* ---- טקסט "לחץ להתחיל" מהבהב ---- */
 .press-start {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--gb-mid);
     text-align: center;
     padding: 12px 16px 16px;
@@ -241,13 +241,13 @@ html[dir="ltr"] .pixel-btn {
 }
 
 .setting-key {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--gb-dark);
     line-height: 1.6;
 }
 
 .setting-val {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--gb-black);
 }
 
@@ -259,7 +259,7 @@ html[dir="ltr"] .pixel-btn {
 
 .toggle-btn {
     font-family: var(--font-main);
-    font-size: 8px;
+    font-size: 11px;
     padding: 8px 14px;
     background: var(--gb-pale);
     color: var(--gb-black);
@@ -338,7 +338,7 @@ html[dir="ltr"] .pixel-btn {
 /* ---- כפתור הגדרות inline ---- */
 .settings-inline-btn {
     background: var(--gb-mid);
-    font-size: 9px;
+    font-size: 12px;
     padding: 10px 16px;
 }
 
@@ -348,7 +348,7 @@ html[dir="ltr"] .pixel-btn {
 
 .pixel-select {
     font-family: var(--font-main);
-    font-size: 8px;
+    font-size: 11px;
     padding: 8px 14px;
     background: var(--gb-pale);
     color: var(--gb-black);
@@ -373,7 +373,7 @@ html[dir="ltr"] .pixel-btn {
 }
 
 .coming-soon-body p {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--gb-mid);
     line-height: 2;
 }
@@ -401,21 +401,21 @@ html[dir="ltr"] .pixel-btn {
 }
 
 .instructions-heading {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--gb-black);
     margin-bottom: 10px;
     line-height: 1.6;
 }
 
 .instructions-text {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--gb-dark);
     line-height: 2.6;
     white-space: pre-line;
 }
 
 .page-indicator {
-    font-size: 8px;
+    font-size: 10px;
     color: var(--accent-gold);
     margin-right: 8px;
 }
@@ -446,7 +446,7 @@ html[dir="ltr"] .page-indicator {
     justify-content: space-between;
     align-items: center;
     padding: 8px 14px;
-    font-size: 8px;
+    font-size: 11px;
     border-bottom: 3px solid var(--gb-dark);
     gap: 8px;
 }
@@ -458,7 +458,7 @@ html[dir="ltr"] .page-indicator {
     background: var(--gb-dark);
     color: var(--accent-gold);
     text-align: center;
-    font-size: 8px;
+    font-size: 11px;
     padding: 5px;
     letter-spacing: 2px;
     border-bottom: 2px solid var(--gb-black);
@@ -500,7 +500,7 @@ html[dir="ltr"] .page-indicator {
     justify-content: center;
 }
 .message-text {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--gb-dark);
     line-height: 2.2;
     flex: 1;
@@ -528,7 +528,7 @@ html[dir="ltr"] .page-indicator {
 
 .tab-btn {
     font-family: var(--font-main);
-    font-size: 9px;
+    font-size: 12px;
     flex: 1;
     padding: 10px 8px;
     background: var(--gb-mid);
@@ -577,16 +577,16 @@ html[dir="ltr"] .page-indicator {
     flex: 1;
 }
 
-.item-emoji { font-size: 18px; flex-shrink: 0; }
+.item-emoji { font-size: 22px; flex-shrink: 0; }
 
 .item-name {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--gb-dark);
     flex: 1;
 }
 
 .item-price {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--accent-gold);
     flex-shrink: 0;
 }
@@ -599,12 +599,12 @@ html[dir="ltr"] .page-indicator {
 }
 
 .item-stock {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--gb-mid);
 }
 
 .small-btn {
-    font-size: 8px;
+    font-size: 11px;
     padding: 6px 10px;
     width: auto;
 }
@@ -617,7 +617,7 @@ html[dir="ltr"] .page-indicator {
 }
 
 .no-interest {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--gb-mid);
     opacity: 0.55;
 }
@@ -631,7 +631,7 @@ html[dir="ltr"] .page-indicator {
 }
 
 .cart-header {
-    font-size: 9px;
+    font-size: 12px;
     color: var(--gb-dark);
     margin-bottom: 4px;
     font-weight: bold;
@@ -653,7 +653,7 @@ html[dir="ltr"] .page-indicator {
     background: var(--gb-screen);
     border: 2px solid var(--gb-mid);
     padding: 2px 5px;
-    font-size: 8px;
+    font-size: 11px;
     border-radius: 2px;
 }
 
@@ -662,7 +662,7 @@ html[dir="ltr"] .page-indicator {
     border: none;
     color: var(--accent-red);
     cursor: pointer;
-    font-size: 9px;
+    font-size: 12px;
     font-family: var(--font-main);
     padding: 0 2px;
 }
@@ -674,7 +674,7 @@ html[dir="ltr"] .page-indicator {
 }
 
 .cart-total {
-    font-size: 10px;
+    font-size: 13px;
     color: var(--gb-dark);
     font-weight: bold;
 }
@@ -682,18 +682,18 @@ html[dir="ltr"] .page-indicator {
 .checkout-btn {
     background: var(--accent-gold) !important;
     color: var(--gb-black) !important;
-    font-size: 9px !important;
+    font-size: 12px !important;
     padding: 6px 12px !important;
 }
 
 .cart-add-btn {
-    font-size: 14px !important;
+    font-size: 16px !important;
     padding: 4px 10px !important;
     min-width: 28px;
 }
 
 .empty-msg {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--gb-mid);
     padding: 24px 16px;
     text-align: center;
@@ -717,7 +717,7 @@ html[dir="ltr"] .page-indicator {
     border: 4px solid var(--gb-black);
     box-shadow: 6px 6px 0 var(--gb-black);
     padding: 20px 16px;
-    width: 300px;
+    width: 340px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -730,7 +730,7 @@ html[dir="ltr"] .page-indicator {
     left: 6px;
     background: none;
     border: none;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--gb-mid);
     cursor: pointer;
     font-family: var(--font-main);
@@ -743,7 +743,7 @@ html[dir="ltr"] .page-indicator {
 }
 
 .math-question {
-    font-size: 10px;
+    font-size: 13px;
     color: var(--gb-dark);
     line-height: 2.4;
     text-align: center;
@@ -758,8 +758,8 @@ html[dir="ltr"] .page-indicator {
 
 .math-input {
     font-family: var(--font-main);
-    font-size: 18px;
-    width: 80px;
+    font-size: 22px;
+    width: 90px;
     padding: 8px;
     border: 3px solid var(--gb-black);
     background: var(--gb-pale);
@@ -770,18 +770,18 @@ html[dir="ltr"] .page-indicator {
 .confirm-btn {
     width: auto;
     padding: 8px 14px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .math-feedback {
-    font-size: 10px;
+    font-size: 13px;
     color: var(--gb-dark);
     text-align: center;
     min-height: 18px;
 }
 
 .math-attempts {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--accent-red);
     text-align: center;
     min-height: 14px;
@@ -804,12 +804,12 @@ html[dir="ltr"] .page-indicator {
 .over-body { background: #f8f0e0; }
 
 .end-art {
-    font-size: 32px;
+    font-size: 36px;
     letter-spacing: 8px;
 }
 
 .end-title {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--gb-dark);
     text-shadow: 2px 2px 0 var(--gb-pale);
     text-align: center;
@@ -832,7 +832,7 @@ html[dir="ltr"] .page-indicator {
     justify-content: space-between;
     align-items: center;
     padding: 10px 16px;
-    font-size: 9px;
+    font-size: 12px;
     border-bottom: 2px solid var(--gb-pale);
     color: var(--gb-dark);
 }
@@ -840,7 +840,7 @@ html[dir="ltr"] .page-indicator {
 .stat-row:last-child { border-bottom: none; }
 
 .end-msg {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--gb-mid);
     text-align: center;
     line-height: 2;
@@ -877,7 +877,7 @@ html[dir="ltr"] .page-indicator {
    ============================ */
 
 .balloons-msg {
-    font-size: 10px;
+    font-size: 13px;
     color: var(--gb-dark);
     text-align: center;
     padding: 12px 16px 4px;
@@ -975,18 +975,18 @@ html[dir="ltr"] .page-indicator {
 }
 
 .shop-emoji {
-    font-size: 28px;
+    font-size: 32px;
 }
 
 .shop-name {
-    font-size: 7px;
+    font-size: 10px;
     color: var(--gb-dark);
     margin-top: 2px;
     line-height: 1.4;
 }
 
 .shop-items {
-    font-size: 14px;
+    font-size: 16px;
     margin-top: 4px;
     letter-spacing: 2px;
 }
@@ -1013,7 +1013,7 @@ html[dir="ltr"] .page-indicator {
     transform: translateX(-50%);
     background: var(--accent-gold);
     color: var(--gb-black);
-    font-size: 7px;
+    font-size: 10px;
     padding: 4px 8px;
     border: 2px solid var(--gb-black);
     white-space: nowrap;
@@ -1035,6 +1035,6 @@ html[dir="ltr"] .page-indicator {
     }
 
     .title-main {
-        font-size: 15px;
+        font-size: 18px;
     }
 }
