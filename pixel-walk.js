@@ -455,15 +455,19 @@ class PixelWalk {
   _exclamation() {
     const ctx = this.ctx;
     const cx  = Math.round(this.charX) + (this.isRTL ? 16 : -16);
-    const cy  = this.GY - 104;
+    const cy  = this.GY - 110;
     ctx.save();
     ctx.translate(cx, cy);
     ctx.scale(this.excScale, this.excScale);
-    this._px(-10, -20, 20, 24, '#FFD700');
-    this._px(-8,  -18, 16, 20, '#000000');
-    this._px(-2,  -16, 6,  10, '#FFD700');
-    this._px(-2,  -4,  6,  6,  '#FFD700');
-    this._px(-2,  -14, 2,  4,  '#FFF080', 0.7);
+    // background bubble
+    this._px(-12, -24, 24, 30, '#FFD700');
+    this._px(-10, -22, 20, 26, '#000000');
+    // vertical bar of "!"
+    this._px(-3, -20, 6, 16, '#FFD700');
+    // highlight on bar
+    this._px(-3, -18, 2, 10, '#FFF080', 0.7);
+    // dot of "!"
+    this._px(-3, 0, 6, 6, '#FFD700');
     ctx.restore();
   }
 }
