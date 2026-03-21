@@ -95,6 +95,15 @@
                 </div>
 
                 <div class="setting-row">
+                    <span class="setting-key" id="txt-font-size-label">גודל טקסט</span>
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" id="btn-font-small" onclick="setFontSize('small')">קטן</button>
+                        <button class="toggle-btn" id="btn-font-medium" onclick="setFontSize('medium')">בינוני</button>
+                        <button class="toggle-btn" id="btn-font-large" onclick="setFontSize('large')">גדול</button>
+                    </div>
+                </div>
+
+                <div class="setting-row">
                     <span class="setting-key" id="txt-balloon-color">צבע בלונים</span>
                     <div class="color-picker">
                         <button class="color-btn active" data-color="#e74c3c" style="--c:#e74c3c" onclick="setBalloonColor('#e74c3c')"></button>

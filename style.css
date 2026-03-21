@@ -22,6 +22,16 @@
     --shadow:      rgba(0,0,0,0.6);
 
     --font-main: 'Press Start 2P', 'Courier New', monospace;
+    --font-scale: 1;
+}
+
+/* ---- גודל טקסט ---- */
+body.font-small  { --font-scale: 1; }
+body.font-medium { --font-scale: 1.25; }
+body.font-large  { --font-scale: 1.5; }
+
+.gb-frame {
+    zoom: var(--font-scale);
 }
 
 /* ---- איפוס בסיסי ---- */

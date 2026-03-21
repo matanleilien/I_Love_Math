@@ -18,6 +18,14 @@ const gameState = {
 
 let balloonColor = '#e74c3c'; // ברירת מחדל: אדום
 
+function setFontSize(size) {
+    document.body.classList.remove('font-small', 'font-medium', 'font-large');
+    document.body.classList.add('font-' + size);
+    document.getElementById('btn-font-small').classList.toggle('active', size === 'small');
+    document.getElementById('btn-font-medium').classList.toggle('active', size === 'medium');
+    document.getElementById('btn-font-large').classList.toggle('active', size === 'large');
+}
+
 function setBalloonColor(color) {
     balloonColor = color;
     document.querySelectorAll('.color-btn').forEach(b => {
@@ -97,6 +105,10 @@ const T = {
         overAgain:      'נסה שוב',
         volumeLabel:    'מוסיקה',
         walkSettings:   'הגדרות',
+        fontSizeLabel:  'גודל טקסט',
+        fontSmall:      'קטן',
+        fontMedium:     'בינוני',
+        fontLarge:      'גדול',
         balloonColor:   'צבע בלונים',
         popBalloons:    'לחצי על הבלונים!',
         instructionsBtn:'הוראות',
@@ -172,6 +184,10 @@ const T = {
         overAgain:      'Try Again',
         volumeLabel:    'Music',
         walkSettings:   'Settings',
+        fontSizeLabel:  'Text Size',
+        fontSmall:      'Small',
+        fontMedium:     'Medium',
+        fontLarge:      'Large',
         balloonColor:   'Balloon Color',
         popBalloons:    'Pop the balloons!',
         instructionsBtn:'Instructions',
@@ -235,6 +251,7 @@ const textMap = {
     'txt-over-again':     'overAgain',
     'txt-volume-label':   'volumeLabel',
     'txt-walk-settings':  'walkSettings',
+    'txt-font-size-label':'fontSizeLabel',
     'txt-balloon-color':  'balloonColor',
     'txt-pop-balloons':   'popBalloons',
     'txt-instructions-btn':'instructionsBtn',
@@ -258,6 +275,13 @@ function updateTexts() {
         const el = document.getElementById(id);
         if (el && t[key] !== undefined) el.textContent = t[key];
     }
+    // Update font size button labels
+    const fs = document.getElementById('btn-font-small');
+    const fm = document.getElementById('btn-font-medium');
+    const fl = document.getElementById('btn-font-large');
+    if (fs) fs.textContent = t.fontSmall;
+    if (fm) fm.textContent = t.fontMedium;
+    if (fl) fl.textContent = t.fontLarge;
 }
 
 // ---- שפה ----
@@ -848,5 +872,6 @@ function toggleMute() {
 
 // ---- אתחול ----
 document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('font-small');
     updateTexts();
 });
